@@ -3,12 +3,14 @@
  */
 package com.hellochengkai.github;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import com.hellochengkai.github.test.*;
 
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+//        new ObservableTest().apply(null);
+//        new FlowableTest().apply(null);
+//        new SingleTest().apply(null);
+//        new CompletableTest().run();
+        new MaybeTest().run();
     }
 }
