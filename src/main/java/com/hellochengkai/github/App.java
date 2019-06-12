@@ -3,7 +3,9 @@
  */
 package com.hellochengkai.github;
 
-import com.hellochengkai.github.test.*;
+import com.hellochengkai.github.test.ColdAndHot.Cold2Hot.ConnectableObservableTest;
+import com.hellochengkai.github.test.ColdAndHot.Cold2Hot.SubjectTest;
+import com.hellochengkai.github.test.ColdAndHot.Hot2Cold.RefCountTest;
 
 public class App {
     public static void main(String[] args) {
@@ -11,6 +13,7 @@ public class App {
 //        new FlowableTest().apply(null);
 //        new SingleTest().apply(null);
 //        new CompletableTest().run();
-        new MaybeTest().run();
+//        new MaybeTest().run();
+        new RefCountTest().run();
     }
 }
