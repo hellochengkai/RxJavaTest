@@ -32,9 +32,20 @@ public class SingleTest implements Function {
         };
         Single.create((SingleOnSubscribe<String>) emitter -> {
             emitter.onSuccess("This is ok");
+            //只发送一次事件，后面的都不会再发送
+            emitter.onSuccess("This is ok1");
+            emitter.onSuccess("This is ok2");
+            emitter.onSuccess("This is ok3");
 //            emitter.onError(new Throwable("myError"));
         }).subscribe(singleObserver);
-        Single.just("aaa").subscribe(singleObserver);
+
+        //可以通过toXXXX进行转变
+        Single.just("haha").toObservable();
+        Single.just("haha").toFlowable();
+        Single.just("haha").toFuture();
+        Single.just("haha").toMaybe();
+
+//        Single.just("aaa").subscribe(singleObserver);
         return null;
     }
 }

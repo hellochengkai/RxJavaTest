@@ -6,6 +6,12 @@ package com.hellochengkai.github;
 import com.hellochengkai.github.test.ColdAndHot.Cold2Hot.ConnectableObservableTest;
 import com.hellochengkai.github.test.ColdAndHot.Cold2Hot.SubjectTest;
 import com.hellochengkai.github.test.ColdAndHot.Hot2Cold.RefCountTest;
+import com.hellochengkai.github.test.CompletableTest;
+import com.hellochengkai.github.test.MaybeTest;
+import com.hellochengkai.github.test.ObservableTest;
+import com.hellochengkai.github.test.SingleTest;
+import io.reactivex.plugins.RxJavaPlugins;
+import org.reactivestreams.Processor;
 
 public class App {
     public static void main(String[] args) {
@@ -13,7 +19,7 @@ public class App {
 //        new FlowableTest().apply(null);
 //        new SingleTest().apply(null);
 //        new CompletableTest().run();
-//        new MaybeTest().run();
-        new RefCountTest().run();
+        new ObservableTest().apply(null);
+//        new RefCountTest().run();
     }
 }

@@ -1,9 +1,14 @@
 package com.hellochengkai.github.test;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
+import io.reactivex.*;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.schedulers.NewThreadScheduler;
+import io.reactivex.internal.schedulers.RxThreadFactory;
+import io.reactivex.schedulers.Schedulers;
+
+import java.util.concurrent.ThreadFactory;
 import java.util.function.Function;
+
 public class ObservableTest implements Function {
 
     @Override
@@ -19,27 +24,66 @@ public class ObservableTest implements Function {
          *  有多个订阅者时，Observable和订阅者们是一对一的，背个订阅这收到的都是一个新的事件
          */
 
-        Observable.just("asdfasd").subscribe(new Observer<String>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                System.out.println("ObservableTest.onSubscribe");
-            }
+//        Observable.just("asdfasd","asdfasd").subscribe(new Observer<String>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                System.out.println("ObservableTest.onSubscribe" + d.getClass().getName());
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//                System.out.println("ObservableTest.onNext" + "s = " + s);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                System.out.println("ObservableTest.onError " + e);
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                System.out.println("ObservableTest.onComplete");
+//            }
+//        });
 
-            @Override
-            public void onNext(String s) {
-                System.out.println("ObservableTest.onNext" + "s = " + s);
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                System.out.println("ObservableTest.onError " + e);
-            }
+        Observable.just("sfdasd")
+//                .subscribeOn(Schedulers.computation())
+//                .subscribeOn(new NewThreadScheduler(new RxThreadFactory("chengkai subscribe Thread")))
+//                .observeOn(new NewThreadScheduler(new RxThreadFactory("chengkai observe Thread")))
+                .observeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.newThread())
+//                .subscribeOn(new NewThreadScheduler(new ThreadFactory() {
+//                    @Override
+//                    public Thread newThread(Runnable runnable) {
+//                        Thread thread = new Thread(runnable,"test");
+//                        thread.setPriority( Thread.NORM_PRIORITY);
+//                        thread.setDaemon(true);
+//                        return thread;
+//                    }
+//                }))
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.println("ObservableTest.onSubscribe " + Thread.currentThread().getName());
+                    }
 
-            @Override
-            public void onComplete() {
-                System.out.println("ObservableTest.onComplete");
-            }
-        });
+                    @Override
+                    public void onNext(String s) {
+                        System.out.println("ObservableTest.onNext " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("ObservableTest.onError "  + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("ObservableTest.onComplete " + Thread.currentThread().getName());
+                    }
+                });
+
         return null;
     }
 }

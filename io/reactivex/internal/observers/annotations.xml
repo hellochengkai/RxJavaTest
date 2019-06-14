@@ -1,0 +1,5 @@
+<root>
+    <item name='io.reactivex.internal.observers.BiConsumerSingleObserver'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
