@@ -6,6 +6,8 @@ import io.reactivex.MaybeObserver;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.internal.operators.maybe.MaybeSubscribeOn;
+import io.reactivex.schedulers.Schedulers;
 
 public class MaybeTest implements Runnable{
     @Override
@@ -35,10 +37,20 @@ public class MaybeTest implements Runnable{
             }
         };
 
-        Maybe.create((MaybeOnSubscribe<String>) emitter -> {
-            emitter.onComplete();//调用onComplete之后onSuccess会无效
-            emitter.onSuccess("hello Maybe");
-        }).subscribe(maybeObserver);
+        //将 MaybeOnSubscribe 托付给 MaybeCreate
+        Maybe maybe = Maybe.create(new MaybeOnSubscribe<String>() {
+            @Override
+            public void subscribe(MaybeEmitter<String> emitter) throws Exception {
+                System.out.println("MaybeTest.subscribe " + Thread.currentThread().getName());
+                emitter.onSuccess("hello Maybe");
+                emitter.onComplete();//调用onComplete之后onSuccess会无效
+            }
+        });
+        MaybeSubscribeOn maybe1 = (MaybeSubscribeOn) maybe.subscribeOn(Schedulers.newThread());
+        // 调用 MaybeCreate.subscribeActual,
+        // 将上一步托付的 MaybeOnSubscribe 创建相应的 MaybeCreate.Emitter,
+        // 并发射相应的数据
+        maybe1.subscribe(maybeObserver);
 
         Maybe.create((MaybeOnSubscribe<String>) emitter -> {
             emitter.onSuccess("1111");

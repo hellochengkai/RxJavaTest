@@ -19,7 +19,7 @@ public class App {
 //        new FlowableTest().apply(null);
 //        new SingleTest().apply(null);
 //        new CompletableTest().run();
-        new ObservableTest().apply(null);
+        new MaybeTest().run();
 //        new RefCountTest().run();
     }
 }

@@ -2,8 +2,6 @@ package com.hellochengkai.github.test;
 
 import io.reactivex.*;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 
 
 public class CompletableTest implements Runnable {
