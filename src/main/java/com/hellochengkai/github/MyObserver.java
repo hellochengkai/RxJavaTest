@@ -3,13 +3,12 @@ package com.hellochengkai.github;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MyObserver implements Observer <String>{
+public class MyObserver<T> implements Observer <T>{
 
     public static MyObserver create(String name)
     {
         return new MyObserver(name);
     }
-
 
     private String name;
 
@@ -19,21 +18,21 @@ public class MyObserver implements Observer <String>{
 
     @Override
     public void onSubscribe(Disposable d) {
-        System.out.println("\n" + name + " : MyObserver.onSubscribe at " +  + Thread.currentThread().getId());
+        System.out.println("\n" + name + " : MyObserver.onSubscribe at " + Thread.currentThread().getName());
     }
 
     @Override
-    public void onNext(String s) {
-        System.out.println(name + " : MyObserver.onNext " + s + " at " +  + Thread.currentThread().getId());
+    public void onNext(T s) {
+        System.out.println(name + " : MyObserver.onNext(" + s + ") at " + Thread.currentThread().getName());
     }
 
     @Override
     public void onError(Throwable e) {
-        System.out.println(name + " : MyObserver.onError at " + Thread.currentThread().getId() + "\n");
+        System.out.println(name + " : MyObserver.onError at " + Thread.currentThread().getName() + "\n");
     }
 
     @Override
     public void onComplete() {
-        System.out.println(name + " : MyObserver.onComplete at " + Thread.currentThread().getId() + "\n");
+        System.out.println(name + " : MyObserver.onComplete at " + Thread.currentThread().getName() + "\n");
     }
 }

@@ -3,8 +3,16 @@
  */
 package com.hellochengkai.github;
 
+import com.hellochengkai.github.operator.*;
+
 public class App {
     public static void main(String[] args) {
-        new SchedulerTest().run();
+        new SkipTest().run();
+
+        try {
+            Thread.sleep(5 * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
