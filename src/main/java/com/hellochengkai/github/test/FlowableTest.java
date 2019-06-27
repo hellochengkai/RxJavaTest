@@ -28,10 +28,12 @@ public class FlowableTest implements Runnable {
         Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
             public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
-                Observable.range(1,124).subscribe(integer -> emitter.onNext(integer));
-                emitter.onComplete();
+                for (int i = 0;i < 127;i++){
+                    emitter.onNext(i);
+                }
             }
         },BackpressureStrategy.MISSING)
+                .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(MyFlowableSubscriber.create("a"));
     }
