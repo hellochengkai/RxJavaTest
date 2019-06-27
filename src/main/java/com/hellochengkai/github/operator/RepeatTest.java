@@ -13,14 +13,17 @@ public class RepeatTest implements Runnable {
 
     @Override
     public void run() {
-
+        /**
+         * repeat 不是创建一个Observe,而是重复发送某个数据,
+         * 在执行完onComplete之前触发repeat,
+         * 不调用onComplete时不会进行数据的重复发送
+         */
         Observable.create((ObservableOnSubscribe<String>) emitter -> {
             System.out.println("RepeatTest.run" + Thread.currentThread().getId());
             emitter.onNext("hello repeat");
             emitter.onComplete();
         })
-                .repeat(10)//repeat 不是创建一个Observe,而是重复发送某个数据,在执行完onComplete之前触发repeat,不调用onComplete时不会进行数据的重复发送
-                .subscribe(MyObserver.create("create"));
+                .repeat(10).subscribe(MyObserver.create("create"));
 
         Observable.just("hello repeat")
                 .repeat(10)

@@ -1,38 +1,38 @@
 package com.hellochengkai.github.test;
 
-import io.reactivex.Flowable;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+import com.hellochengkai.github.MyFlowableSubscriber;
+import io.reactivex.*;
+import io.reactivex.schedulers.Schedulers;
 
-import java.util.function.Function;
+import javax.security.auth.Subject;
 
-public class FlowableTest implements Function {
+public class FlowableTest implements Runnable {
+
     @Override
-    public Object apply(Object o) {
+    public void run() {
         /**
-         * Flowable 发射0-n个事件，并以错误或者成功结束,支持背压
+         * Flowable 支持背压
+         * BackpressureStrategy 背压策略
+         * MISSING 没有任何缓存和丢弃事件
+         * ERROR
+         * BUFFER
+         * DROP
+         * LATEST
+         * 指定背压策略的方法有两种
+         * create BackpressureStrategy.XXXX
+         * 和使用操作符
+         * .onBackpressureDrop()
+         * .onBackpressureLatest()
+         * .onBackpressureBuffer();
          */
-        Flowable.just("aaaa").subscribe(new Subscriber<String>() {
+        Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
-            public void onSubscribe(Subscription s) {
-                System.out.println("FlowableTest.onSubscribe");
+            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
+                Observable.range(1,124).subscribe(integer -> emitter.onNext(integer));
+                emitter.onComplete();
             }
-
-            @Override
-            public void onNext(String s) {
-                System.out.println("FlowableTest.onNext " + s);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                System.out.println("FlowableTest.onError");
-            }
-
-            @Override
-            public void onComplete() {
-                System.out.println("FlowableTest.onComplete");
-            }
-        });
-        return null;
+        },BackpressureStrategy.MISSING)
+                .observeOn(Schedulers.newThread())
+                .subscribe(MyFlowableSubscriber.create("a"));
     }
 }

@@ -1,22 +1,24 @@
 package com.hellochengkai.github;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-public class MyObserver<T> implements Observer <T>{
-    static final String TAG = MyObserver.class.getSimpleName();
-    public static MyObserver create(String name)
-    {
-        return new MyObserver(name);
+import io.reactivex.FlowableSubscriber;
+import org.reactivestreams.Subscription;
+
+public class MyFlowableSubscriber<T> implements FlowableSubscriber<T> {
+
+    static final String TAG = MyFlowableSubscriber.class.getSimpleName();
+
+    public static MyFlowableSubscriber create(String name) {
+        return new MyFlowableSubscriber(name);
     }
 
     private String name;
 
-    private MyObserver(String name) {
+    private MyFlowableSubscriber(String name) {
         this.name = name;
     }
 
     @Override
-    public void onSubscribe(Disposable d) {
+    public void onSubscribe(Subscription s) {
         System.out.println("\n" + name + " : " + TAG + ".onSubscribe at " + Thread.currentThread().getName());
     }
 
@@ -27,7 +29,7 @@ public class MyObserver<T> implements Observer <T>{
 
     @Override
     public void onError(Throwable t) {
-        System.out.println(name + " : " + TAG + ".onError at " + Thread.currentThread().getName() + "\n");
+        System.out.println(name + " : " + TAG + ".onError " + t.getMessage() + " at " + Thread.currentThread().getName() + "\n");
     }
 
     @Override

@@ -4,13 +4,14 @@
 package com.hellochengkai.github;
 
 import com.hellochengkai.github.operator.*;
+import com.hellochengkai.github.test.FlowableTest;
 
 public class App {
     public static void main(String[] args) {
-        new SkipTest().run();
+        new FlowableTest().run();
 
         try {
-            Thread.sleep(5 * 1000);
+            Thread.sleep(20 * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
