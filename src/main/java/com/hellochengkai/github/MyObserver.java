@@ -1,8 +1,12 @@
 package com.hellochengkai.github;
 
 import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 public class MyObserver<T> implements Observer <T>{
+
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     static final String TAG = MyObserver.class.getSimpleName();
     public static MyObserver create(String name)
     {
@@ -17,6 +21,7 @@ public class MyObserver<T> implements Observer <T>{
 
     @Override
     public void onSubscribe(Disposable d) {
+        compositeDisposable.add(d);
         System.out.println("\n" + name + " : " + TAG + ".onSubscribe at " + Thread.currentThread().getName());
     }
 
@@ -27,6 +32,7 @@ public class MyObserver<T> implements Observer <T>{
 
     @Override
     public void onError(Throwable t) {
+        compositeDisposable.clear();
         System.out.println(name + " : " + TAG + ".onError at " + Thread.currentThread().getName() + "\n");
     }
 

@@ -4,6 +4,7 @@ import io.reactivex.*;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.internal.schedulers.NewThreadScheduler;
 import io.reactivex.internal.schedulers.RxThreadFactory;
+import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
 import java.util.concurrent.ThreadFactory;
@@ -62,6 +63,12 @@ public class ObservableTest implements Function {
 //                        return thread;
 //                    }
 //                }))
+                .compose(new ObservableTransformer<String, String>() {
+                    @Override
+                    public ObservableSource<String> apply(Observable<String> upstream) {
+                        return null;
+                    }
+                })
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -74,7 +81,7 @@ public class ObservableTest implements Function {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(Throwable e) {sys
                         System.out.println("ObservableTest.onError "  + Thread.currentThread().getName());
                     }
 
@@ -83,7 +90,6 @@ public class ObservableTest implements Function {
                         System.out.println("ObservableTest.onComplete " + Thread.currentThread().getName());
                     }
                 });
-
         return null;
     }
 }
