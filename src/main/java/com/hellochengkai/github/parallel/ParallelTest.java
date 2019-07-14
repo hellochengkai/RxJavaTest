@@ -1,5 +1,6 @@
-package com.hellochengkai.github;
+package com.hellochengkai.github.parallel;
 
+import com.hellochengkai.github.MyObserver;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;

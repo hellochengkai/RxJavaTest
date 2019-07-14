@@ -81,7 +81,7 @@ public class ObservableTest implements Function {
                     }
 
                     @Override
-                    public void onError(Throwable e) {sys
+                    public void onError(Throwable e) {
                         System.out.println("ObservableTest.onError "  + Thread.currentThread().getName());
                     }
 
