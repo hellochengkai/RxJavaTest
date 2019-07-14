@@ -6,6 +6,15 @@ import com.hellochengkai.github.test.FlowableTest;
 
 public class App {
     public static void main(String[] args) {
+<<<<<<< HEAD
+        new FlowableTest().run();
+        try {
+            Thread.sleep(1000 * 60 * 2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+=======
         new SchedulerTest().run();
     
 		try {
@@ -13,5 +22,6 @@ public class App {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+>>>>>>> home
     }
 }
