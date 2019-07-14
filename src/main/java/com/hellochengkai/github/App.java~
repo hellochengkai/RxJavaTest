@@ -5,12 +5,16 @@ package com.hellochengkai.github;
 
 public class App {
     public static void main(String[] args) {
+<<<<<<< Updated upstream
         new SchedulerTest().run();
-    
-		try {
+=======
+        new ParallelTest().run();
+
+        try {
             Thread.sleep(20 * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+>>>>>>> Stashed changes
     }
 }
